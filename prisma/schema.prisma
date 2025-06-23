@@ -8,3 +8,130 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+
+model User{
+  id String @id @default(uuid())
+  name String
+  email String
+  password String
+  role UserRole
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt()
+
+  reservations Reservation[]
+  loans Loan[]
+  notifications Notification[]
+  penalties Penalty[]
+}
+
+enum UserRole{
+  ALUNO
+  BIBLIOTECARIO
+  ADMIN
+}
+
+model Book{
+  id String @id @default(uuid())
+  title String
+  author String
+  publisher String
+  isbn String @unique
+  description String
+  category String
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt()
+
+  copies Copy[]
+}
+
+model Copy{
+  id String @id @default(uuid())
+  code String @unique
+  status CopyStatus
+  
+  bookId String
+  book Book @relation(fields: [bookId], references: [id])
+
+  loan Loan[]
+  reservation Reservation[]
+}
+
+enum CopyStatus{
+  DISPONIVEL
+  EMPRESTADO
+  RESERVADO
+  DANIFICADO
+  PERDIDO
+}
+
+model Reservation {
+  id String @id @default(uuid())
+  
+  userId String
+  user User @relation(fields: [userId], references: [id])
+
+  copyId String
+  copy Copy @relation(fields: [copyId], references: [id])
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt()
+}
+
+enum ReservationStatus {
+  ATIVO
+  CANCELADO
+  FULFILLED
+}
+
+model Loan {
+  id String @id @default(uuid())
+  
+  userId String
+  user User @relation(fields: [userId], references: [id])
+
+  copyId String
+  copy Copy @relation(fields: [copyId], references: [id])
+
+  loanedAt DateTime
+  dueDate DateTime
+  returnedAt DateTime
+
+  status LoanStatus
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt()
+}
+
+enum LoanStatus{
+   ACTIVE
+  RETURNED
+  OVERDUE
+}
+
+model Notification{
+  id String @id @default(uuid())
+  title String
+  message String
+  read Boolean @default(false)
+
+  userId String
+  user User @relation(fields: [userId], references: [id])
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt()
+}
+
+model Penalty{
+  id String @id @default(uuid())
+  reason String
+  issuedAt DateTime @default(now())
+  expiresAt DateTime
+  active Boolean @default(true)
+
+  userId String
+  user User @relation(fields: [userId], references: [id])
+
+
+}

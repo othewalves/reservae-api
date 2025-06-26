@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import { AuthUserDTO, AuthUserSchema } from "../dtos/auth-user.dto";
 import { AuthUserService } from "../services/auth-user.service";
-import { handleError } from "../../utils/handle-error";
+import { handleError } from "../../../utils/handle-error";
 
 class AuthUserController {
     async handle(req: Request, res: Response) {

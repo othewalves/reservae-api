@@ -27,7 +27,8 @@ class UserPrisma implements IUserRepository {
             }, select: {
                 email: true,
                 name: true,
-                id: true
+                id: true,
+                role: true
             }
         });
 

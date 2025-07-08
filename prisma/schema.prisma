@@ -50,7 +50,6 @@ model Book{
 
   copies Copy[]
 }
-
 model Copy{
   id String @id @default(uuid())
   code String @unique

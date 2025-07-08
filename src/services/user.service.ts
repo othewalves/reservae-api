@@ -1,10 +1,11 @@
-import { ExceptionError } from "../../utils/exception-error";
-import { validityCPF } from "../../utils/validity-cpf";
-import { CreateUserDTO } from "./dtos/create-user.dto";
-import { UpdateUserDTO } from "./dtos/update.user.dto";
-import { createUser, findByCPF, findByEmail, findById, updateUser } from "./user.repository";
+import { ExceptionError } from "../utils/exception-error";
+import { validityCPF } from "../utils/validity-cpf";
+import { CreateUserDTO } from "../dto/create.user.dto";
+import { UpdateUserDTO } from "../dto/update.user.dto";
+import { createUser, findByCPF, findByEmail, findById, updateUser } from "../repository";
 
 class UserService {
+
 
     async create(data: CreateUserDTO) {
 

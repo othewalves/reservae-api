@@ -1,8 +1,8 @@
 import { hash } from "bcryptjs";
-import prisma from "../../prisma/client";
-import { User } from "./user.entity";
-import { CreateUserDTO } from "./dtos/create-user.dto";
-import { UpdateUserDTO } from "./dtos/update.user.dto";
+import prisma from "../prisma/client";
+import { User } from "../entity";
+import { CreateUserDTO } from "../dto";
+import { UpdateUserDTO } from "../dto";
 
 export const findById = async (id: string) => {
     const user: User = await prisma.user.findFirst({

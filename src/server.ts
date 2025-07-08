@@ -1,7 +1,6 @@
 
 import express, { Request, Response } from 'express';
-import { userRouter } from './modules/user/user.routes';
-import { authRouter } from './modules/auth/auth.routes';
+import { authRouter, userRouter, } from './routes';
 
 const app = express();
 const PORT = 3000;

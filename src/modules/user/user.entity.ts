@@ -2,7 +2,9 @@ export type User = {
     id: string;
     name: string;
     email: string;
+    phone: string;
+    cpf: string;
     role: 'ALUNO' | 'BIBLIOTECARIO' | 'ADMIN';
-    // opcional: createdAt?: Date;
-    // opcional: updatedAt?: Date;
+    createdAt?: Date;
+    updatedAt?: Date;
 }

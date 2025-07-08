@@ -1,5 +1,5 @@
 import prisma from "../../prisma/client";
-import { AuthUserDTO } from "./dtos/auth-user.dto";
+import { AuthUserDTO } from "./auth.dto";
 
 export const loginUser = async (data: AuthUserDTO) => {
     const user = await prisma.user.findFirst({

@@ -17,7 +17,7 @@ export const generateToken = (payload: IPayloadToken) => {
         process.env.SECRETE_JWT,
         {
             subject: payload.id,
-            expiresIn: '30d'
+            expiresIn: '15d'
         },
     )
     return token;

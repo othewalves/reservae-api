@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
-import { AuthUserDTO, AuthUserSchema } from "./dtos/auth-user.dto";
-import { AuthUserService } from "./auth-user.service";
+import { AuthUserDTO, AuthUserSchema } from "./auth.dto";
+import { AuthUserService } from "./auth.service";
 import { handleError } from "../../utils/handle-error";
 
 class AuthUserController {

@@ -1,6 +1,6 @@
 import { loginUser } from './auth.repository';
 import { compare } from 'bcryptjs';
-import { AuthUserDTO } from "./dtos/auth-user.dto";
+import { AuthUserDTO } from "./auth.dto";
 
 import { ExceptionError } from '../../utils/exception-error';
 import { generateToken } from '../../utils/generate-token';

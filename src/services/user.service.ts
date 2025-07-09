@@ -6,7 +6,6 @@ import { createUser, findByCPF, findByEmail, findById, updateUser } from "../rep
 
 class UserService {
 
-
     async create(data: CreateUserDTO) {
 
         const isValidCPF = validityCPF(data.cpf);

@@ -1,6 +1,6 @@
 
 import express, { Request, Response } from 'express';
-import { authRouter, userRouter, } from './routes';
+import { authRouter, userRouter, bookRouter } from './routes';
 
 const app = express();
 const PORT = 3000;
@@ -13,6 +13,7 @@ app.get('/', (_req: Request, res: Response) => {
 
 app.use('/user', userRouter);
 app.use('/auth', authRouter);
+app.use('/book', bookRouter);
 
 app.listen(PORT, () => {
     console.log(`API no ar, acesse: http://localhost:${PORT}`)

@@ -1,6 +1,11 @@
 import { CreateBookDTO } from "../dto/book/create-book.dto"
 import prisma from "../prisma/client"
 
+export const getAllBooks = async () => {
+    const books = await prisma.book.findMany();
+    return books;
+}
+
 export const findBookByTitle = async (title: string) => {
     const bookExists = await prisma.book.findFirst({
         where: {

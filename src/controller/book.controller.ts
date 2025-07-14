@@ -5,6 +5,15 @@ import { CreateBookDTO, createBookSchema } from "../dto/book/create-book.dto";
 
 const bookService = new BookService();
 class BookController {
+    async get(req: Request, res: Response) {
+        try {
+            const books = await bookService.get();
+            return res.status(200).json(books);
+        } catch (error) {
+            return handleError(error, res);
+        }
+    };
+
     async create(req: Request, res: Response) {
         try {
             const { user_id } = req;

@@ -1,8 +1,14 @@
 import { CreateBookDTO } from "../dto/book/create-book.dto";
-import { createBook, findBookByTitle, hasPermission } from "../repository/book.repository";
+import { createBook, findBookByTitle, getAllBooks, hasPermission } from "../repository/book.repository";
 import { ExceptionError } from "../utils/exception-error";
 
 class BookService {
+
+    async get() {
+        const books = await getAllBooks();
+        return books;
+    }
+
     async create(id: string, dataBook: CreateBookDTO) {
 
         const isLibrarian = await hasPermission(id);
@@ -22,6 +28,7 @@ class BookService {
 
         return book;
     };
+
 };
 
 export { BookService };

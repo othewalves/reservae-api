@@ -28,11 +28,13 @@ export const createBookSchema = z.object({
 
     cover: z
         .string()
-        .url({ message: 'A URL da capa é inválida' }),
+        .url({ message: 'A URL da capa é inválida' })
+        .optional(),
 
     banner: z
         .string()
-        .url({ message: 'A URL do banner é inválida' }),
+        .url({ message: 'A URL do banner é inválida' })
+        .optional(),
 });
 
 export type CreateBookDTO = z.infer<typeof createBookSchema>;

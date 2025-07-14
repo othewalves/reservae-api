@@ -17,9 +17,18 @@ class BookController {
     async create(req: Request, res: Response) {
         try {
             const { user_id } = req;
-            const dataBook: CreateBookDTO = createBookSchema.parse(req.body);
-            const book = await bookService.create(user_id, dataBook);
-            return res.status(200).json(book);
+
+            if (!req.file) {
+                handleError('error upload file', res)
+            } else {
+                const { originalname, filename } = req.file;
+                const dataBook: CreateBookDTO = createBookSchema.parse(req.body);
+
+                // const book = await bookService.create(user_id, { ...dataBook, cover: filename });
+
+                return res.status(200).json({ originalname, filename });
+            }
+
         } catch (error) {
             return handleError(error, res);
         };

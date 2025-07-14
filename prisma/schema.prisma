@@ -1,4 +1,3 @@
-
 generator client {
   provider = "prisma-client-js"
   output   = "../src/generated/prisma"
@@ -9,60 +8,70 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model User{
-  id String @id @default(uuid())
-  name String
-  email String
-  cpf String @unique
-  phone String
+model User {
+  id       String   @id @default(uuid())
+  name     String
+  email    String
+  cpf      String   @unique
+  phone    String
   password String
-  role UserRole
+  role     UserRole
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt()
 
-  reservations Reservation[]
-  loans Loan[]
+  reservations  Reservation[]
+  loans         Loan[]
   notifications Notification[]
-  penalties Penalty[]
+  penalties     Penalty[]
 }
 
-enum UserRole{
+enum UserRole {
   ALUNO
   BIBLIOTECARIO
   ADMIN
 }
 
-model Book{
-  id String @id @default(uuid())
-  title String
-  author String
-  publisher String
-  isbn String @unique
+model Book {
+  id          String @id @default(uuid())
+  title       String
+  author      String
+  publisher   String
+  isbn        String @unique
   description String
-  category String
 
-  cover String
+  cover  String
   banner String
+
+  copies Copy[]
+  tags   Category[] @relation("BookCategories")
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt()
-
-  copies Copy[]
 }
-model Copy{
-  id String @id @default(uuid())
-  code String @unique
-  status CopyStatus
-  
-  bookId String
-  book Book @relation(fields: [bookId], references: [id])
 
-  loan Loan[]
+model Category {
+  id    String @id @default(uuid())
+  name  String @unique
+  books Book[] @relation("BookCategories")
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt()
+}
+
+model Copy {
+  id     String     @id @default(uuid())
+  code   String     @unique
+  status CopyStatus
+
+  bookId String
+  book   Book   @relation(fields: [bookId], references: [id])
+
+  loan        Loan[]
   reservation Reservation[]
 }
 
-enum CopyStatus{
+enum CopyStatus {
   DISPONIVEL
   EMPRESTADO
   RESERVADO
@@ -72,12 +81,12 @@ enum CopyStatus{
 
 model Reservation {
   id String @id @default(uuid())
-  
+
   userId String
-  user User @relation(fields: [userId], references: [id])
+  user   User   @relation(fields: [userId], references: [id])
 
   copyId String
-  copy Copy @relation(fields: [copyId], references: [id])
+  copy   Copy   @relation(fields: [copyId], references: [id])
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt()
@@ -91,15 +100,15 @@ enum ReservationStatus {
 
 model Loan {
   id String @id @default(uuid())
-  
+
   userId String
-  user User @relation(fields: [userId], references: [id])
+  user   User   @relation(fields: [userId], references: [id])
 
   copyId String
-  copy Copy @relation(fields: [copyId], references: [id])
+  copy   Copy   @relation(fields: [copyId], references: [id])
 
-  loanedAt DateTime
-  dueDate DateTime
+  loanedAt   DateTime
+  dueDate    DateTime
   returnedAt DateTime
 
   status LoanStatus
@@ -108,34 +117,32 @@ model Loan {
   updatedAt DateTime @updatedAt()
 }
 
-enum LoanStatus{
-   ACTIVE
+enum LoanStatus {
+  ACTIVE
   RETURNED
   OVERDUE
 }
 
-model Notification{
-  id String @id @default(uuid())
-  title String
+model Notification {
+  id      String  @id @default(uuid())
+  title   String
   message String
-  read Boolean @default(false)
+  read    Boolean @default(false)
 
   userId String
-  user User @relation(fields: [userId], references: [id])
+  user   User   @relation(fields: [userId], references: [id])
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt()
 }
 
-model Penalty{
-  id String @id @default(uuid())
-  reason String
-  issuedAt DateTime @default(now())
+model Penalty {
+  id        String   @id @default(uuid())
+  reason    String
+  issuedAt  DateTime @default(now())
   expiresAt DateTime
-  active Boolean @default(true)
+  active    Boolean  @default(true)
 
   userId String
-  user User @relation(fields: [userId], references: [id])
-
-
+  user   User   @relation(fields: [userId], references: [id])
 }

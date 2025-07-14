@@ -24,9 +24,9 @@ class BookController {
                 const { originalname, filename } = req.file;
                 const dataBook: CreateBookDTO = createBookSchema.parse(req.body);
 
-                // const book = await bookService.create(user_id, { ...dataBook, cover: filename });
+                const book = await bookService.create(user_id, { ...dataBook, cover: filename });
 
-                return res.status(200).json({ originalname, filename });
+                return res.status(200).json(book);
             }
 
         } catch (error) {

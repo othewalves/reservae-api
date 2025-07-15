@@ -1,5 +1,6 @@
+import { UpdateBookDTO } from "../dto";
 import { CreateBookDTO } from "../dto/book/create-book.dto";
-import { createBook, findBookByTitle, getAllBooks } from "../repository/book.repository";
+import { createBook, findBookById, findBookByTitle, getAllBooks, updateBook } from "../repository/book.repository";
 import { hasPermission } from "../repository/hasPermission.repository";
 import { ExceptionError } from "../utils/exception-error";
 
@@ -10,9 +11,9 @@ class BookService {
         return books;
     }
 
-    async create(id: string, dataBook: CreateBookDTO) {
+    async create(user_id: string, dataBook: CreateBookDTO) {
 
-        const isLibrarian = await hasPermission(id);
+        const isLibrarian = await hasPermission(user_id);
 
         if (!isLibrarian) {
             return new ExceptionError('Operação inválida', 403, 'user');
@@ -29,6 +30,24 @@ class BookService {
 
         return book;
     };
+
+    async updateBook(user_id: string, dataBook: UpdateBookDTO) {
+
+        const isLibrarian = await hasPermission(user_id);
+
+        if (!isLibrarian) {
+            return new ExceptionError('Operação inválida', 403, 'user');
+        }
+
+        const bookExists = await findBookById(dataBook.id);
+
+        if (!bookExists) {
+            throw new ExceptionError('Não foi possível atualizar o livro', 400, 'book');
+        }
+
+        const book = await updateBook(dataBook);
+        return book;
+    }
 
 };
 

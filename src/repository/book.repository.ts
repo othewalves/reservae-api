@@ -1,3 +1,4 @@
+import { UpdateBookDTO } from "../dto";
 import { CreateBookDTO } from "../dto/book/create-book.dto"
 import prisma from "../prisma/client"
 
@@ -5,6 +6,16 @@ export const getAllBooks = async () => {
     const books = await prisma.book.findMany();
     return books;
 }
+
+export const findBookById = async (id: string) => {
+    const bookExists = await prisma.book.findFirst({
+        where: {
+            id
+        }
+    });
+
+    return bookExists;
+};
 
 export const findBookByTitle = async (title: string) => {
     const bookExists = await prisma.book.findFirst({
@@ -39,5 +50,25 @@ export const createBook = async (dataBook: CreateBookDTO) => {
             },
         },
     });
+    return book;
+};
+
+export const updateBook = async (dataBook: UpdateBookDTO) => {
+    const { id, tags, ...fieldsToUpdate } = dataBook;
+
+    const book = await prisma.book.update({
+        where: {
+            id: dataBook.id
+        },
+        data: {
+            ...fieldsToUpdate,
+            ...(tags && {
+                tags: {
+                    set: tags.map(tagId => ({ id: tagId })),
+                },
+            }),
+        },
+    });
+
     return book;
 };

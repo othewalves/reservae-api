@@ -22,10 +22,6 @@ export const createBookSchema = z.object({
         .string()
         .min(10, { message: 'A descrição deve ter pelo menos 10 caracteres' }),
 
-    category: z
-        .string()
-        .min(1, { message: 'A categoria é obrigatória' }),
-
     cover: z
         .string()
         .url({ message: 'A URL da capa é inválida' })

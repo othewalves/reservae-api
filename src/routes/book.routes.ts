@@ -11,5 +11,6 @@ const upload = multer(uploadConfig.upload('./tmp'));
 
 bookRouter.get('/', bookController.get.bind(bookController));
 bookRouter.post('/create', isAuthenticated, upload.single('file'), bookController.create.bind(bookController));
+bookRouter.put('/update', isAuthenticated, upload.single('file'), bookController.update.bind(bookController));
 
 export { bookRouter };

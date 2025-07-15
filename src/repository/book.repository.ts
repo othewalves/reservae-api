@@ -16,28 +16,28 @@ export const findBookByTitle = async (title: string) => {
     return bookExists;
 };
 
-export const hasPermission = async (id: string) => {
-    const isLibrarian = await prisma.user.findFirst({
-        where: {
-            id
-        }
-    });
-
-    return isLibrarian.role === 'BIBLIOTECARIO' ? true : false;
-};
-
 export const createBook = async (dataBook: CreateBookDTO) => {
     const book = await prisma.book.create({
         data: {
             title: dataBook.title,
             author: dataBook.author,
             publisher: dataBook.publisher,
-            category: dataBook.category,
             isbn: dataBook.isbn,
             description: dataBook.description,
             cover: dataBook.cover,
             banner: dataBook.banner,
-        }
+            tags: {
+                connect: dataBook.tags.map(id => ({ id })),
+            },
+        },
+        include: {
+            tags: {
+                select: {
+                    id: true,
+                    name: true
+                }
+            },
+        },
     });
     return book;
 };

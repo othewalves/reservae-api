@@ -53,6 +53,7 @@ model Book {
 model Category {
   id    String @id @default(uuid())
   name  String @unique
+  
   books Book[] @relation("BookCategories")
 
   createdAt DateTime @default(now())

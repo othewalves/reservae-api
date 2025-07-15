@@ -21,7 +21,7 @@ class BookController {
             if (!req.file) {
                 handleError('error upload file', res)
             } else {
-                const { originalname, filename } = req.file;
+                const { filename } = req.file;
                 const dataBook: CreateBookDTO = createBookSchema.parse(req.body);
 
                 const book = await bookService.create(user_id, { ...dataBook, cover: filename });

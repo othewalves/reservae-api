@@ -35,6 +35,12 @@ export const createBookSchema = z.object({
         .string()
         .url({ message: 'A URL do banner é inválida' })
         .optional(),
+    tags: z
+        .array(z
+            .string()
+            .uuid())
+        .nonempty('Selecione pelo menos uma categoria'),
+
 });
 
 export type CreateBookDTO = z.infer<typeof createBookSchema>;

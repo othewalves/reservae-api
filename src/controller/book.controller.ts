@@ -40,7 +40,7 @@ class BookController {
         try {
             const { user_id } = req;
             if (!req.file) {
-                handleError('error upload file', res)
+                handleError('error upload file', res);
             } else {
 
                 const { filename } = req.file;
@@ -50,13 +50,26 @@ class BookController {
                 const book = await bookService.updateBook(user_id, { ...dataBook, cover: filename });
 
                 return res.status(200).json(book);
-            }
+            };
         } catch (error) {
             console.error('❌ Erro real:', error);
 
-            return handleError(error, res)
-        }
-    }
+            return handleError(error, res);
+        };
+    };
+
+    async delete(req: Request, res: Response) {
+        try {
+            const { book_id } = req.params;
+
+            const book = await bookService.deleteBook(book_id);
+
+            return res.status(200).json({ book });
+
+        } catch (error) {
+            return handleError(error, res);
+        };
+    };
 };
 
 export { BookController };

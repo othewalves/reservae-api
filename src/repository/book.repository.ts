@@ -8,13 +8,13 @@ export const getAllBooks = async () => {
 }
 
 export const findBookById = async (id: string) => {
-    const bookExists = await prisma.book.findFirst({
+    const book = await prisma.book.findFirst({
         where: {
             id
         }
     });
 
-    return bookExists;
+    return book;
 };
 
 export const findBookByTitle = async (title: string) => {
@@ -72,3 +72,13 @@ export const updateBook = async (dataBook: UpdateBookDTO) => {
 
     return book;
 };
+
+export const deleteBook = async (id: string) => {
+    const book = await prisma.book.delete({
+        where: {
+            id
+        }
+    });
+
+    return { message: 'Livro foi excluído' };
+}

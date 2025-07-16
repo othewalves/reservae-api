@@ -1,6 +1,6 @@
 import { UpdateBookDTO } from "../dto";
 import { CreateBookDTO } from "../dto/book/create-book.dto";
-import { createBook, findBookById, findBookByTitle, getAllBooks, updateBook } from "../repository/book.repository";
+import { createBook, deleteBook, findBookById, findBookByTitle, getAllBooks, updateBook } from "../repository/book.repository";
 import { hasPermission } from "../repository/hasPermission.repository";
 import { ExceptionError } from "../utils/exception-error";
 
@@ -47,7 +47,20 @@ class BookService {
 
         const book = await updateBook(dataBook);
         return book;
-    }
+    };
+
+    async deleteBook(id: string) {
+        const bookExists = await findBookById(id);
+
+        if (!bookExists) {
+            throw new ExceptionError('Livro inválido', 404, 'id');
+        };
+
+        const book = await deleteBook(id);
+
+        return book;
+
+    };
 
 };
 

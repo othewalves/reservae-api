@@ -1,9 +1,9 @@
-import { loginUser } from '../repository';
 import { compare } from 'bcryptjs';
-import { AuthUserDTO } from "../dto/auth.dto";
 
-import { ExceptionError } from '../utils/exception-error';
-import { generateToken } from '../utils/generate-token';
+import { AuthUserDTO } from './auth.schema';
+import { loginUser } from './auth.repository';
+
+import { ExceptionError, generateToken } from '../../utils';
 
 class AuthUserService {
     async execute(data: AuthUserDTO) {

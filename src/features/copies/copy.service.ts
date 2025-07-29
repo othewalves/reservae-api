@@ -1,4 +1,4 @@
-import { CreateCopyDTO } from "../dto";
+import { CreateCopyDTO } from "./schema";
 
 class CopyService {
     async create(dataCopy: CreateCopyDTO) {

@@ -1,5 +1,6 @@
-import { CreateCopyDTO } from "../dto"
-import prisma from "../prisma/client"
+import prisma from "../../prisma/client"
+
+import { CreateCopyDTO } from "./schema"
 
 export const createCopy = async (dataCopy: CreateCopyDTO) => {
     const copy = await prisma.copy.create({

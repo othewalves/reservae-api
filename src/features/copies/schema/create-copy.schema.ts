@@ -1,4 +1,3 @@
-// dto/create-copy.dto.ts
 import { z } from 'zod';
 
 export const CreateCopySchema = z.object({

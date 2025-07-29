@@ -22,8 +22,8 @@ app.get('/', (_req: Request, res: Response) => {
 
 app.use('/user', router.userRouter);
 app.use('/auth', router.authRouter);
-app.use('/book', router.bookRouter);
-app.use('/category', router.categoryRouter);
+app.use('/books', router.bookRouter);
+app.use('/categories', router.categoryRouter);
 
 app.listen(PORT, () => {
     console.log(`API no ar, acesse: http://localhost:${PORT}`)

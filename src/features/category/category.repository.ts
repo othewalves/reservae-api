@@ -1,5 +1,6 @@
-import { CreateCategoryDTO } from "../dto/category/create-category.dto";
-import prisma from "../prisma/client";
+import prisma from "../../prisma/client";
+
+import { CreateCategoryDTO } from "./schema";
 
 export const findCategoryByName = async (name: string) => {
     const categories = await prisma.category.findFirst({

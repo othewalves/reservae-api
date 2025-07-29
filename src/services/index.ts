@@ -1,2 +1,2 @@
 
-export * from './category.service';
+export * from '../features/category/category.service';

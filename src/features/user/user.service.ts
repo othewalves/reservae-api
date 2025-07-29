@@ -1,7 +1,8 @@
-import { ExceptionError } from "../utils/exception-error";
-import { validityCPF } from "../utils/validity-cpf";
-import { CreateUserDTO, UpdateUserDTO } from "../dto";
-import { createUser, findByCPF, findByEmail, findById, updateUser } from "../repository";
+import { CreateUserDTO, UpdateUserDTO } from "./schema";
+
+import { createUser, findByCPF, findByEmail, findById, updateUser } from "./user.repository";
+
+import { ExceptionError, validityCPF } from "../../utils";
 
 class UserService {
 

@@ -1,8 +1,10 @@
 import { Request, Response } from "express";
-import { UserService } from "../services";
-import { handleError } from "../utils/handle-error";
-import { CreateUserDTO, createUserSchema } from "../dto";
-import { UpdateUserSchema, UpdateUserDTO } from "../dto";
+
+import { UserService } from "./user.service";
+
+import { UpdateUserSchema, UpdateUserDTO, CreateUserDTO, createUserSchema } from "./schema";
+
+import { handleError } from "../../utils";
 
 const userService = new UserService();
 

@@ -1,19 +1,33 @@
 import { Request, Response } from "express";
-import { BookService } from "../services";
-import { handleError } from "../utils/handle-error";
-import { CreateBookDTO, createBookSchema } from "../dto/book/create-book.dto";
-import { UpdateBookDTO, UpdateBookSchema } from "../dto";
+
+import { BookService } from "./book.service";
+
+import { CreateBookDTO, createBookSchema, UpdateBookDTO, UpdateBookSchema } from "./schema";
+
+import { handleError } from "../../utils";
 
 const bookService = new BookService();
 class BookController {
-    async get(req: Request, res: Response) {
+
+    async listAll(req: Request, res: Response) {
         try {
-            const books = await bookService.get();
+            const books = await bookService.listAll();
             return res.status(200).json(books);
         } catch (error) {
             return handleError(error, res);
         }
     };
+
+    async listById(req: Request, res: Response) {
+        try {
+            const { book_id } = req.params;
+            const book = await bookService.listById(book_id);
+
+            return res.status(200).json(book);
+        } catch (error) {
+            return handleError(error, res);
+        }
+    }
 
     async create(req: Request, res: Response) {
         try {
@@ -52,8 +66,6 @@ class BookController {
                 return res.status(200).json(book);
             };
         } catch (error) {
-            console.error('❌ Erro real:', error);
-
             return handleError(error, res);
         };
     };

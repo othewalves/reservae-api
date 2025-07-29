@@ -1,14 +1,24 @@
-import { UpdateBookDTO } from "../dto";
-import { CreateBookDTO } from "../dto/book/create-book.dto";
-import { createBook, deleteBook, findBookById, findBookByTitle, getAllBooks, updateBook } from "../repository/book.repository";
-import { hasPermission } from "../repository/hasPermission.repository";
-import { ExceptionError } from "../utils/exception-error";
+import { CreateBookDTO, UpdateBookDTO } from './schema';
+
+import * as repository from './book.repository';
+
+import { ExceptionError, hasPermission } from "../../utils";
 
 class BookService {
 
-    async get() {
-        const books = await getAllBooks();
+    async listAll() {
+        const books = await repository.getAllBooks();
         return books;
+    }
+
+    async listById(bookId: string) {
+        const book = await repository.findBookById(bookId);
+
+        if (!book) {
+            return new ExceptionError('Livro não encontrado :(', 404, 'book');
+        }
+
+        return book;
     }
 
     async create(user_id: string, dataBook: CreateBookDTO) {
@@ -19,14 +29,14 @@ class BookService {
             return new ExceptionError('Operação inválida', 403, 'user');
         }
 
-        const bookExists = await findBookByTitle(dataBook.title);
+        const bookExists = await repository.findBookByTitle(dataBook.title);
 
         if (bookExists) {
             throw new ExceptionError("Livro já cadastrado", 409, 'book');
 
         };
 
-        const book = await createBook(dataBook);
+        const book = await repository.createBook(dataBook);
 
         return book;
     };
@@ -39,24 +49,24 @@ class BookService {
             return new ExceptionError('Operação inválida', 403, 'user');
         }
 
-        const bookExists = await findBookById(dataBook.id);
+        const bookExists = await repository.findBookById(dataBook.id);
 
         if (!bookExists) {
             throw new ExceptionError('Não foi possível atualizar o livro', 400, 'book');
         }
 
-        const book = await updateBook(dataBook);
+        const book = await repository.updateBook(dataBook);
         return book;
     };
 
     async deleteBook(id: string) {
-        const bookExists = await findBookById(id);
+        const bookExists = await repository.findBookById(id);
 
         if (!bookExists) {
             throw new ExceptionError('Livro inválido', 404, 'id');
         };
 
-        const book = await deleteBook(id);
+        const book = await repository.deleteBook(id);
 
         return book;
 

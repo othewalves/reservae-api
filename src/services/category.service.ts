@@ -1,6 +1,6 @@
 import { CreateCategoryDTO } from "../dto/category/create-category.dto";
 import { createCategory, findCategoryByName } from "../repository/category.repository";
-import { hasPermission } from "../repository/hasPermission.repository";
+import { hasPermission } from "../utils/has-permission";
 import { ExceptionError } from "../utils/exception-error";
 
 class CategoryService {

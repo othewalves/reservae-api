@@ -1,6 +1,5 @@
-import { UpdateBookDTO } from "../dto";
-import { CreateBookDTO } from "../dto/book/create-book.dto"
-import prisma from "../prisma/client"
+import { CreateBookDTO, UpdateBookDTO } from "./schema";
+import prisma from "../../prisma/client"
 
 export const getAllBooks = async () => {
     const books = await prisma.book.findMany();

@@ -41,6 +41,16 @@ export const findCopyByBookId = async (bookId: string) => {
     return copy;
 }
 
+export const findCopyById = async (copyId: string) => {
+    const copy = await prisma.copy.findFirst({
+        where: {
+            id: copyId
+        }
+    });
+
+    return copy;
+}
+
 export const createCopy = async (
     bookId,
     { name, code, }: Copy

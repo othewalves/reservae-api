@@ -50,17 +50,14 @@ class CopyService {
     async delete(copy_id: string, user_id: string) {
         const isLibrarian = await hasPermission(user_id);
 
-
         if (!isLibrarian) {
-
-            console.log('admin', isLibrarian, user_id)
             throw new ExceptionError('Operação não autorizada', 403, '');
         };
 
-        const copyExists = await repository.findCopyByBookId(copy_id);
+        const copyExists = await repository.findCopyById(copy_id);
 
         if (!copyExists) {
-            throw new ExceptionError('Livro inválido', 404, '')
+            throw new ExceptionError('Livro inválido', 404, '');
         }
 
         const copy = await repository.deleteCopy(copy_id);

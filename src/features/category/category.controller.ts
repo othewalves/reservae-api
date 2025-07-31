@@ -12,7 +12,9 @@ class CategoryController {
     async createCategory(req: Request, res: Response) {
         try {
             const { user_id } = req;
+
             const dataCategory = CreateCategorySchema.parse(req.body) as CreateCategoryDTO;
+
             const category = await categoryService.create(user_id, dataCategory);
 
             return res.status(200).json(category);

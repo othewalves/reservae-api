@@ -52,6 +52,16 @@ export const createBook = async (dataBook: CreateBookDTO) => {
     return book;
 };
 
+export const createCopy = async (quantity: number, bookId: string, { title, code, }: CreateBookDTO) => {
+    const copies = await prisma.copy.create({
+        data: {
+            code: `${code}-${quantity}`,
+            name: title,
+            bookId
+        }
+    })
+}
+
 export const updateBook = async (dataBook: UpdateBookDTO) => {
     const { id, tags, ...fieldsToUpdate } = dataBook;
 

@@ -51,9 +51,9 @@ model Book {
 }
 
 model Category {
-  id    String @id @default(uuid())
-  name  String @unique
-  
+  id   String @id @default(uuid())
+  name String @unique
+
   books Book[] @relation("BookCategories")
 
   createdAt DateTime @default(now())
@@ -62,8 +62,9 @@ model Category {
 
 model Copy {
   id     String     @id @default(uuid())
+  name   String
   code   String     @unique
-  status CopyStatus
+  status CopyStatus @default(DISPONIVEL)
 
   bookId String
   book   Book   @relation(fields: [bookId], references: [id])

@@ -21,7 +21,6 @@ export const createBookSchema = z.object({
     description: z
         .string()
         .min(10, { message: 'A descrição deve ter pelo menos 10 caracteres' }),
-
     cover: z
         .string()
         .url({ message: 'A URL da capa é inválida' })
@@ -36,6 +35,14 @@ export const createBookSchema = z.object({
             .string()
             .uuid())
         .nonempty('Selecione pelo menos uma categoria'),
+    quantity: z
+        .string()
+        .min(1, { message: 'É preciso cadastrar pelo menos uma unidade do livro' }),
+    code: z
+        .string()
+        .min(3, { message: 'O código do livro deve ter pelo menos 3 caracteres' }),
+
+
 
 });
 

@@ -36,7 +36,16 @@ class BookService {
 
         };
 
+
         const book = await repository.createBook(dataBook);
+
+        const quantity = parseInt(dataBook.quantity);
+        const copies = [];
+
+        for (let i = 1; i <= quantity; i++) {
+            const copy = await repository.createCopy(i, book.id, dataBook);
+            copies.push(copy)
+        }
 
         return book;
     };

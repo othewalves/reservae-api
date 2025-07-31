@@ -12,7 +12,7 @@ class CopyService {
 
     async create(user_id: string, bookId: string, quantity: string) {
 
-        const isLibrarian = hasPermission(user_id);
+        const isLibrarian = await hasPermission(user_id);
 
         if (!isLibrarian) {
             throw new ExceptionError('Operação não autorizada', 403, '');
@@ -29,8 +29,6 @@ class CopyService {
 
         const copies = [];
         const quantityAlreadyExists = await repository.countCopiesByBookId(bookId);
-        console.log(quantityAlreadyExists);
-
 
         for (let i = 1; i <= parseInt(quantity); i++) {
 
@@ -48,6 +46,28 @@ class CopyService {
 
         return copies;
     };
+
+    async delete(copy_id: string, user_id: string) {
+        const isLibrarian = await hasPermission(user_id);
+
+
+        if (!isLibrarian) {
+
+            console.log('admin', isLibrarian, user_id)
+            throw new ExceptionError('Operação não autorizada', 403, '');
+        };
+
+        const copyExists = await repository.findCopyByBookId(copy_id);
+
+        if (!copyExists) {
+            throw new ExceptionError('Livro inválido', 404, '')
+        }
+
+        const copy = await repository.deleteCopy(copy_id);
+
+        return copy;
+
+    }
 
 };
 

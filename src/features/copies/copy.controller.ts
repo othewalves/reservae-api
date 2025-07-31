@@ -15,9 +15,8 @@ class CopyController {
     };
 
     async create(req: Request, res: Response) {
-
         try {
-            const { user_id } = req.params;
+            const { user_id } = req;
 
             const { bookId, quantity } = CreateCopySchema.parse(req.body)
 
@@ -26,10 +25,22 @@ class CopyController {
             return res.status(200).json(copies);
 
         } catch (error) {
-            console.log('caiu aqui')
             return handleError(error, res);
-        }
-    }
+        };
+    };
+
+    async delete(req: Request, res: Response) {
+        try {
+            const { user_id } = req;
+            const { copy_id } = req.params;
+
+            const copy = await copyService.delete(copy_id, user_id);
+
+            return res.status(200).json({ message: 'Cópia deletada com sucesso!', copy });
+        } catch (error) {
+            return handleError(error, res);
+        };
+    };
 };
 
 export { CopyController };

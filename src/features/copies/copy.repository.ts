@@ -1,8 +1,6 @@
 import { Copy } from "../../generated/prisma";
 import prisma from "../../prisma/client"
 
-import { CreateCopyDTO } from "./schema"
-
 export const listAll = async (code: string) => {
     const copy = await prisma.copy.findMany({
         where: {
@@ -56,3 +54,13 @@ export const createCopy = async (
     });
     return copy;
 };
+
+export const deleteCopy = async (id: string) => {
+    const copy = await prisma.copy.delete({
+        where: {
+            id
+        }
+    });
+
+    return copy;
+}

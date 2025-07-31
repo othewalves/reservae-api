@@ -15,6 +15,11 @@ copyRouter.get('/:bookId',
 copyRouter.post('/',
     isAuthenticated,
     copyController.create.bind(copyController)
-)
+);
 
-export { copyRouter }
+copyRouter.delete('/:copy_id',
+    isAuthenticated,
+    copyController.delete.bind(copyController)
+);
+
+export { copyRouter };

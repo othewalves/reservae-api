@@ -18,21 +18,35 @@ class CopyService {
             throw new ExceptionError('Operação não autorizada', 403, '');
         };
 
-        const copyExists = await repository.findCopyByBookId(bookId);
+        const bookExists = await repository.findBookById(bookId);
 
-
-        if (!copyExists) {
-            console.log('passou aqui?', copyExists)
+        if (!bookExists) {
             throw new ExceptionError('Livro não encontrado', 404, 'book')
         };
 
-        const { code, name, status } = copyExists;
 
-        for (let i = 0; i <= parseInt(quantity); i++) {
-            const copies = await repository.createCopy(bookId, quantity, { code, name, status } as Copy);
+        const { code, title } = bookExists;
+
+        const copies = [];
+        const quantityAlreadyExists = await repository.countCopiesByBookId(bookId);
+        console.log(quantityAlreadyExists);
+
+
+        for (let i = 1; i <= parseInt(quantity); i++) {
+
+            const newCode = `${code}-${quantityAlreadyExists + i}`;
+
+            const copy = await repository.createCopy(
+                bookId,
+                {
+                    code: newCode,
+                    name: title,
+                } as Copy
+            );
+            copies.push(copy)
         };
 
-        return copyExists;
+        return copies;
     };
 
 };

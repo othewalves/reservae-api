@@ -8,7 +8,7 @@ const copyRouter = Router();
 
 const copyController = new CopyController();
 
-copyRouter.get('/',
+copyRouter.get('/:bookId',
     copyController.listAll.bind(copyController)
 );
 

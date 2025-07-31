@@ -29,9 +29,6 @@ class CopyController {
             console.log('caiu aqui')
             return handleError(error, res);
         }
-
-
-
     }
 };
 

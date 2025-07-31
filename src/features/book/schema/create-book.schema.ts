@@ -40,7 +40,7 @@ export const createBookSchema = z.object({
         .min(1, { message: 'É preciso cadastrar pelo menos uma unidade do livro' }),
     code: z
         .string()
-        .min(3, { message: 'O código do livro deve ter pelo menos 3 caracteres' }),
+        .min(2, { message: 'O código do livro deve ter pelo menos 2 caracteres' }),
 
 
 

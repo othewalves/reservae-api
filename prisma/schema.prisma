@@ -39,6 +39,7 @@ model Book {
   publisher   String
   isbn        String @unique
   description String
+  code        String
 
   cover  String
   banner String

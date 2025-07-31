@@ -10,11 +10,31 @@ export const listAll = async (code: string) => {
         }
     });
 
-    return code;
+    return copy;
+}
+
+export const findBookById = async (bookId: string) => {
+    const book = await prisma.book.findUnique({
+        where: {
+            id: bookId
+        }, select: {
+            code: true,
+            title: true
+        }
+    });
+
+    return book;
+}
+
+export async function countCopiesByBookId(bookId: string): Promise<number> {
+    const count = await prisma.copy.count({
+        where: { bookId: bookId },
+    });
+    return count;
 }
 
 export const findCopyByBookId = async (bookId: string) => {
-    const copy = await prisma.copy.findFirst({
+    const copy = await prisma.copy.findMany({
         where: {
             bookId: bookId
         }
@@ -24,14 +44,13 @@ export const findCopyByBookId = async (bookId: string) => {
 }
 
 export const createCopy = async (
-    bookId, quantity,
-    { name, code, status, }: Copy
+    bookId,
+    { name, code, }: Copy
 ) => {
     const copy = await prisma.copy.create({
         data: {
             name,
-            code: `${code}-${quantity}`,
-            status,
+            code,
             bookId,
         }
     });

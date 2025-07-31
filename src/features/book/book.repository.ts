@@ -39,6 +39,7 @@ export const createBook = async (dataBook: CreateBookDTO) => {
             tags: {
                 connect: dataBook.tags.map(id => ({ id })),
             },
+            code: dataBook.code
         },
         include: {
             tags: {

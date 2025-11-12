@@ -46,6 +46,8 @@ class BookController {
             }
 
         } catch (error) {
+            console.log('caiu aqui', error);
+
             return handleError(error, res);
         };
     };

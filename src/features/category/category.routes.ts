@@ -13,4 +13,6 @@ categoryRouter.post('/',
     categoryController.createCategory.bind(categoryController)
 );
 
+categoryRouter.get('/', categoryController.get.bind(categoryController));
+
 export { categoryRouter }

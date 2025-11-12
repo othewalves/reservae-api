@@ -24,6 +24,12 @@ class CategoryService {
 
         return category;
     };
+
+    async get() {
+        const categories = await repository.findCategories()
+
+        return categories
+    }
 };
 
 export { CategoryService };
